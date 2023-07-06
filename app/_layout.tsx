@@ -5,10 +5,11 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Slot, SplashScreen, Stack } from "expo-router";
+import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
-import { AuthProvider } from "./context/auth";
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -24,6 +25,7 @@ export default function RootLayout() {
   const [loaded, error] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     Lato: require("../assets/fonts/Lato.ttf"),
+    HelveticaNeue: require("../assets/fonts/Helvetica-Neue.ttf"),
     ...FontAwesome.font,
   });
 
@@ -43,37 +45,49 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  // custom theme overriding default theme
+  const customTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: "#FFFFFF",
+    },
+  };
 
   return (
     <>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen
+      <StatusBar style="dark" />
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : customTheme}>
+        {/* <ThemeProvider value={DefaultTheme}> */}
+        <SafeAreaProvider>
+          <Stack>
+            {/* <Stack.Screen
             name="(auth)/sign-in"
             options={{
               headerShown: false,
               title: "Sign In",
             }}
-          />
-          {/* <Stack.Screen name="register" options={{ presentation: "modal" }} /> */}
+          /> */}
+            {/* <Stack.Screen name="register" options={{ presentation: "modal" }} /> */}
 
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-          <Stack.Screen
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            {/* <Stack.Screen name="modal" options={{ presentation: "modal" }} /> */}
+            {/* <Stack.Screen
             name="screens/settings"
             options={{
               headerShown: false,
               title: "Settings",
             }}
-          />
-          <Stack.Screen
+            />
+            <Stack.Screen
             name="screens/edit-profile"
             options={{
               headerShown: false,
               title: "Edit Profile",
             }}
-          />
-        </Stack>
+          /> */}
+          </Stack>
+        </SafeAreaProvider>
       </ThemeProvider>
     </>
   );

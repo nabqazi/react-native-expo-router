@@ -25,6 +25,23 @@ export default function TabLayout() {
     >
       <Tabs.Screen
         name="index"
+        options={{ title: "home", headerShown: false }}
+      />
+      <Tabs.Screen
+        name="meditate"
+        options={{ title: "meditate", headerShown: false }}
+      />
+      <Tabs.Screen
+        name="prayers"
+        options={{ title: "prayers", headerShown: false }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{ title: "profile", headerShown: false }}
+      />
+
+      {/* <Tabs.Screen
+        name="index"
         options={{
           title: "Tab One",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
@@ -64,7 +81,7 @@ export default function TabLayout() {
             </Link>
           ),
         }}
-      />
+      /> */}
     </Tabs>
   );
 }
